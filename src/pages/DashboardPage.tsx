@@ -1,4 +1,5 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { Link, useNavigate } from 'react-router-dom'
 import {
   Users,
   Calendar,
@@ -9,19 +10,41 @@ import {
   UserCheck,
   ShieldCheck,
   Activity,
+  ArrowRight,
+  UserPlus,
 } from 'lucide-react'
 import { useAuth } from '../context/useAuth'
 import { Logo } from '../components/auth/Logo'
 import { Card } from '../components/ui/Card'
 import { Button } from '../components/ui/Button'
+import { getPacientesByNutricionista } from '../lib/db'
+import type { Paciente } from '../types/paciente'
 
 export const DashboardPage: React.FC = () => {
   const { user, logout } = useAuth()
-  const [activeTab, setActiveTab] = useState<'dashboard' | 'pacientes'>('dashboard')
+  const navigate = useNavigate()
+  const [pacientes, setPacientes] = useState<Paciente[]>([])
+  const [isLoadingPacientes, setIsLoadingPacientes] = useState(true)
 
   const handleLogout = async () => {
     await logout()
   }
+
+  useEffect(() => {
+    async function loadData() {
+      if (!user?.id) return
+      setIsLoadingPacientes(true)
+      try {
+        const data = await getPacientesByNutricionista(user.id)
+        setPacientes(data)
+      } catch (err) {
+        console.error('Erro ao buscar pacientes no dashboard:', err)
+      } finally {
+        setIsLoadingPacientes(false)
+      }
+    }
+    loadData()
+  }, [user?.id])
 
   return (
     <div className="min-h-screen bg-slate-50/70 flex flex-col md:flex-row text-slate-800">
@@ -33,37 +56,21 @@ export const DashboardPage: React.FC = () => {
 
         {/* Navigation Items */}
         <nav className="p-4 space-y-1.5 flex-1">
-          <button
-            onClick={() => setActiveTab('dashboard')}
-            className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-              activeTab === 'dashboard'
-                ? 'bg-emerald-50 text-emerald-700 shadow-xs'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-            }`}
+          <Link
+            to="/dashboard"
+            className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all bg-emerald-50 text-emerald-700 shadow-xs"
           >
-            <LayoutDashboard
-              className={`w-4 h-4 ${
-                activeTab === 'dashboard' ? 'text-emerald-600' : 'text-slate-400'
-              }`}
-            />
+            <LayoutDashboard className="w-4 h-4 text-emerald-600" />
             <span>Dashboard</span>
-          </button>
+          </Link>
 
-          <button
-            onClick={() => setActiveTab('pacientes')}
-            className={`w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all ${
-              activeTab === 'pacientes'
-                ? 'bg-emerald-50 text-emerald-700 shadow-xs'
-                : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
-            }`}
+          <Link
+            to="/pacientes"
+            className="w-full flex items-center gap-3 px-3.5 py-2.5 rounded-xl text-sm font-semibold transition-all text-slate-600 hover:bg-slate-50 hover:text-slate-900"
           >
-            <Users
-              className={`w-4 h-4 ${
-                activeTab === 'pacientes' ? 'text-emerald-600' : 'text-slate-400'
-              }`}
-            />
+            <Users className="w-4 h-4 text-slate-400" />
             <span>Pacientes</span>
-          </button>
+          </Link>
         </nav>
 
         {/* User Card & Logout in Sidebar */}
@@ -99,7 +106,7 @@ export const DashboardPage: React.FC = () => {
         <header className="bg-white border-b border-slate-200/80 px-6 sm:px-8 py-5 flex items-center justify-between sticky top-0 z-10">
           <div>
             <h1 className="text-xl sm:text-2xl font-bold text-slate-900 tracking-tight">
-              Olá, {user?.name ? user.name.split(' ')[0] : 'Doutora'}! 👋
+              Olá, {user?.name ? user.name.split(' ')[0] : 'Nutricionista'}! 👋
             </h1>
             <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
               Bem-vinda ao RMS-Nutri. Seu sistema de gestão clínica e nutricional.
@@ -130,15 +137,34 @@ export const DashboardPage: React.FC = () => {
             <div className="relative z-10 max-w-2xl">
               <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/15 backdrop-blur-xs text-xs font-medium mb-3">
                 <Sparkles className="w-3.5 h-3.5 text-emerald-200" />
-                <span>Autenticação configurada com sucesso</span>
+                <span>Gestão Nutricional Integrada</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
                 Painel de Controle RMS-Nutri
               </h2>
               <p className="text-emerald-100 text-sm mt-2 leading-relaxed">
-                Seu login foi validado e sua conta de nutricionista está conectada com o Neon
-                Database com Row Level Security (RLS) ativo.
+                Acompanhe o progresso dos seus pacientes, consulte dados clínicos e prescreva novos
+                planos com segurança e alta performance no Neon.
               </p>
+              <div className="mt-5 flex flex-wrap gap-3">
+                <Button
+                  onClick={() => navigate('/pacientes/novo')}
+                  variant="secondary"
+                  size="sm"
+                  leftIcon={<UserPlus className="w-4 h-4 text-emerald-700" />}
+                  className="bg-white text-emerald-800 hover:bg-emerald-50 border-0 font-bold"
+                >
+                  Novo Paciente
+                </Button>
+                <Button
+                  onClick={() => navigate('/pacientes')}
+                  variant="outline"
+                  size="sm"
+                  className="border-white/30 text-white hover:bg-white/10 hover:border-white font-semibold"
+                >
+                  Ver Lista de Pacientes
+                </Button>
+              </div>
             </div>
 
             <div className="absolute right-0 bottom-0 translate-x-12 translate-y-8 opacity-10 pointer-events-none">
@@ -159,7 +185,9 @@ export const DashboardPage: React.FC = () => {
                 </div>
               </div>
               <div className="mt-4">
-                <div className="text-3xl font-extrabold text-slate-900">0</div>
+                <div className="text-3xl font-extrabold text-slate-900">
+                  {isLoadingPacientes ? '...' : pacientes.length}
+                </div>
                 <p className="text-xs text-slate-500 mt-1">
                   Cadastrados pela nutricionista logada
                 </p>
@@ -205,16 +233,52 @@ export const DashboardPage: React.FC = () => {
             </Card>
           </div>
 
-          {/* Quick Info & Next steps */}
-          <div className="rounded-2xl border border-dashed border-slate-300 p-8 text-center bg-white/50">
-            <h3 className="text-base font-semibold text-slate-800">
-              Pronto para os próximos passos
-            </h3>
-            <p className="text-sm text-slate-500 mt-1 max-w-md mx-auto">
-              A autenticação (Prompt 2) está 100% concluída. Todas as sessões e dados de
-              nutricionista estão persistidos.
-            </p>
-          </div>
+          {/* Atalho rápido para lista de pacientes cadastrados */}
+          {pacientes.length > 0 && (
+            <Card className="p-6 border-slate-200">
+              <div className="flex items-center justify-between mb-4">
+                <div>
+                  <h3 className="text-base font-bold text-slate-900">
+                    Pacientes Recentes
+                  </h3>
+                  <p className="text-xs text-slate-500">
+                    Últimos pacientes cadastrados na plataforma
+                  </p>
+                </div>
+                <Link
+                  to="/pacientes"
+                  className="text-xs font-semibold text-emerald-600 hover:text-emerald-700 flex items-center gap-1"
+                >
+                  Ver todos ({pacientes.length}) →
+                </Link>
+              </div>
+
+              <div className="divide-y divide-slate-100">
+                {pacientes.slice(0, 5).map((p) => (
+                  <Link
+                    key={p.id}
+                    to={`/pacientes/${p.id}`}
+                    className="py-3 flex items-center justify-between hover:bg-slate-50 px-2 rounded-lg transition-colors group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center text-xs">
+                        {p.nome.charAt(0).toUpperCase()}
+                      </div>
+                      <div>
+                        <p className="text-sm font-semibold text-slate-800 group-hover:text-emerald-700 transition-colors">
+                          {p.nome}
+                        </p>
+                        <p className="text-xs text-slate-400">
+                          {p.objetivos?.join(', ') || p.objetivo_texto || 'Sem objetivo cadastrado'}
+                        </p>
+                      </div>
+                    </div>
+                    <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-emerald-600 group-hover:translate-x-0.5 transition-all" />
+                  </Link>
+                ))}
+              </div>
+            </Card>
+          )}
         </div>
       </main>
     </div>

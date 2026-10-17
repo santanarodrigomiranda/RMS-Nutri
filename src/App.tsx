@@ -5,6 +5,10 @@ import { useAuth } from './context/useAuth'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
 import { DashboardPage } from './pages/DashboardPage'
+import { PacientesListPage } from './pages/PacientesListPage'
+import { PacienteCreatePage } from './pages/PacienteCreatePage'
+import { PacienteDetailPage } from './pages/PacienteDetailPage'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import { Loader2 } from 'lucide-react'
 
 // Loading Screen
@@ -83,6 +87,37 @@ export function App() {
             element={
               <ProtectedRoute>
                 <DashboardPage />
+              </ProtectedRoute>
+            }
+          />
+          {/* Rotas de Pacientes (Prompt 4) */}
+          <Route
+            path="/pacientes"
+            element={
+              <ProtectedRoute>
+                <ErrorBoundary fallbackTitle="Erro ao carregar lista de pacientes">
+                  <PacientesListPage />
+                </ErrorBoundary>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pacientes/novo"
+            element={
+              <ProtectedRoute>
+                <ErrorBoundary fallbackTitle="Erro ao carregar cadastro de paciente">
+                  <PacienteCreatePage />
+                </ErrorBoundary>
+              </ProtectedRoute>
+            }
+          />
+          <Route
+            path="/pacientes/:id"
+            element={
+              <ProtectedRoute>
+                <ErrorBoundary fallbackTitle="Erro ao carregar dados do paciente">
+                  <PacienteDetailPage />
+                </ErrorBoundary>
               </ProtectedRoute>
             }
           />

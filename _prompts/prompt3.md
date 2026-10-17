@@ -1,6 +1,6 @@
 # Prompt 3 — Dashboard principal
 
-Agora vamos criar o dashboard principal do sistema. Essa é a primeira tela que a nutricionista vê após fazer login.
+Agora vamos criar o dashboard principal do sistema. Essa é a primeira tela que o(a) nutricionista vê após fazer login.
 
 ## Layout
 - Menu lateral fixo com as opções: Dashboard, Pacientes
@@ -10,7 +10,7 @@ Agora vamos criar o dashboard principal do sistema. Essa é a primeira tela que 
 O dashboard deve exibir 3 cards principais:
 
 ### Card 1 — Total de pacientes ativos
-- Exibe o número total de pacientes cadastrados pela nutricionista logada
+- Exibe o número total de pacientes cadastrados pelo(a) nutricionista logada
 
 ### Card 2 — Consultas da semana
 - Exibe o número de consultas registradas na semana atual

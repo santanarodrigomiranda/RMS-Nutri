@@ -1,6 +1,6 @@
 # Prompt 2 — Autenticação
 
-Agora vamos criar a autenticação do sistema. O sistema deve permitir que um nutricionista crie uma conta e faça login. Use o Neon Auth que já está configurado no projeto "RMS-Nutri".
+Agora vamos criar a autenticação do sistema. O sistema deve permitir que o(a) nutricionista crie uma conta e faça login. Use o Neon Auth que já está configurado no projeto "RMS-Nutri".
 
 ## Tela de Login
 - Campo de email
@@ -17,7 +17,7 @@ Agora vamos criar a autenticação do sistema. O sistema deve permitir que um nu
 - Link "Já tem conta? Faça login"
 
 ## Regras importantes
-- Após o cadastro, salvar o nome e email do nutricionista na tabela `nutricionistas` do Neon
+- Após o cadastro, salvar o nome e email do(a) nutricionista na tabela `nutricionistas` do Neon
 - Após o login bem sucedido, redirecionar para o dashboard
 - Se o login falhar, exibir mensagem de erro clara e amigável
 - A senha deve ter no mínimo 9 caracteres
