@@ -1,32 +1,50 @@
-# React + TypeScript + Vite
+# RMS-Nutri — Sistema de Gestão Nutricional e Clínica
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+Sistema web completo para nutricionistas realizarem controle de pacientes, histórico de consultas, avaliações antropométricas e prescrição de planos alimentares, integrado com Neon Database e Neon Auth.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## 🚀 Tecnologias
 
-## React Compiler
+- **Frontend**: React 19, TypeScript, Vite
+- **Estilização**: Tailwind CSS v4, Lucide React
+- **Banco de Dados**: PostgreSQL Serverless via [Neon Database](https://neon.tech)
+- **Autenticação**: Neon Auth (Better Auth gerenciado) com Row Level Security (RLS)
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the Oxlint configuration
+## 🔐 Configuração das Variáveis de Ambiente
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+Para rodar localmente ou configurar no Vercel, crie as variáveis baseadas no `.env.example`:
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
+| Variável | Descrição |
+| :--- | :--- |
+| `VITE_NEON_AUTH_URL` | URL do endpoint de autenticação do Neon Auth |
+| `VITE_NEON_PROJECT_ID` | Identificador do projeto Neon |
+| `VITE_NEON_DATABASE_URL` | String de conexão segura com o Neon Database |
+
+> **Nota de Segurança**: O arquivo com os valores reais (`.env.local` / `.env`) está configurado no `.gitignore` e **nunca** deve ser versionado no GitHub. Configure essas variáveis diretamente no painel da Vercel.
+
+---
+
+## 📦 Como Rodar Localmente
+
+```bash
+# 1. Instalar dependências
+npm install
+
+# 2. Iniciar servidor de desenvolvimento
+npm run dev
+
+# 3. Compilar bundle de produção
+npm run build
 ```
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+---
+
+## 🌐 Deploy na Vercel
+
+1. Importe o repositório `https://github.com/santanarodrigomiranda/RMS-Nutri` na [Vercel](https://vercel.com).
+2. O framework preset será detectado automaticamente como **Vite**.
+3. Na seção **Environment Variables**, adicione as variáveis listadas acima.
+4. Clique em **Deploy**.
