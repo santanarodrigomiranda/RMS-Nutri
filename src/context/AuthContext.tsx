@@ -83,7 +83,9 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       if (response.error) {
         let errorMsg = 'E-mail ou senha incorretos. Por favor, verifique seus dados.'
         const rawErr = (response.error.message || '').toLowerCase()
-        if (rawErr.includes('invalid') || rawErr.includes('credential')) {
+        if (rawErr.includes('origin')) {
+          errorMsg = 'Origem não autorizada (Trusted Domain) no Neon Auth. Verifique a configuração de domínio.'
+        } else if (rawErr.includes('invalid') || rawErr.includes('credential')) {
           errorMsg = 'E-mail ou senha incorretos. Verifique suas credenciais.'
         } else if (rawErr.includes('not found')) {
           errorMsg = 'Nenhuma conta encontrada com este e-mail.'

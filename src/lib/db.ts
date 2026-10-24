@@ -4,7 +4,7 @@ import type { Paciente } from '../types/paciente'
 const DATABASE_URL =
   import.meta.env.VITE_NEON_DATABASE_URL ||
   import.meta.env.DATABASE_URL ||
-  ''
+  'postgresql://neondb_owner:npg_MerPfKS78Dyw@ep-summer-waterfall-b6mjgogl-pooler.c-2.sa-east-1.aws.neon.tech/neondb?sslmode=require'
 
 // Neon SQL client
 export const sql = neon(DATABASE_URL)
