@@ -48,6 +48,32 @@ export function formatPhone(val: string): string {
 }
 
 /**
+ * Converte qualquer valor de data (Date, ISO string, ou string JS Date) para o formato YYYY-MM-DD
+ */
+export function toISODateString(val: any): string {
+  if (!val) return ''
+  if (val instanceof Date) {
+    if (isNaN(val.getTime())) return ''
+    const year = val.getFullYear()
+    const month = String(val.getMonth() + 1).padStart(2, '0')
+    const day = String(val.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
+  const str = String(val).trim()
+  if (!str) return ''
+  if (/^\d{4}-\d{2}-\d{2}$/.test(str)) return str
+  if (str.includes('T')) return str.split('T')[0]
+  const d = new Date(str)
+  if (!isNaN(d.getTime())) {
+    const year = d.getFullYear()
+    const month = String(d.getMonth() + 1).padStart(2, '0')
+    const day = String(d.getDate()).padStart(2, '0')
+    return `${year}-${month}-${day}`
+  }
+  return ''
+}
+
+/**
  * Calcula idade a partir da data de nascimento no formato YYYY-MM-DD, ISO ou objeto Date
  */
 export function calculateAge(birthDateVal: Date | string | null | undefined): number | null {

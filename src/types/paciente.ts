@@ -1,3 +1,43 @@
+export interface Consulta {
+  id: string
+  paciente_id: string
+  nutricionista_id?: string
+  data_consulta: string
+  peso?: number | null
+  cintura?: number | null
+  quadril?: number | null
+  percentual_gordura?: number | null
+  gordura_percentual?: number | null
+  observacoes?: string | null
+  proximo_retorno?: string | null
+  created_at?: string
+}
+
+export interface RefeicoesDia {
+  cafe_da_manha: string[]
+  lanche_manha: string[]
+  almoco: string[]
+  lanche_tarde: string[]
+  jantar: string[]
+}
+
+export interface DiaPlano {
+  dia: string
+  refeicoes: RefeicoesDia
+}
+
+export interface PlanoSemanalConteudo {
+  plano_semanal: DiaPlano[]
+}
+
+export interface PlanoAlimentar {
+  id: string
+  paciente_id: string
+  nutricionista_id?: string
+  conteudo: PlanoSemanalConteudo | string | any
+  created_at: string
+}
+
 export interface Paciente {
   id: string
   nutricionista_id: string
