@@ -1,6 +1,7 @@
 import React from 'react'
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
 import { AuthProvider } from './context/AuthContext'
+import { ThemeProvider } from './context/ThemeContext'
 import { useAuth } from './context/useAuth'
 import { LoginPage } from './pages/LoginPage'
 import { RegisterPage } from './pages/RegisterPage'
@@ -13,9 +14,9 @@ import { Loader2 } from 'lucide-react'
 
 // Loading Screen
 const LoadingScreen: React.FC = () => (
-  <div className="min-h-screen w-full flex flex-col items-center justify-center bg-slate-50 text-slate-600 gap-3">
-    <Loader2 className="w-8 h-8 animate-spin text-emerald-600" />
-    <p className="text-sm font-medium text-slate-500">Carregando RMS-Nutri...</p>
+  <div className="min-h-screen w-full flex flex-col items-center justify-center bg-slate-50 dark:bg-slate-950 text-slate-600 dark:text-slate-300 gap-3 transition-colors">
+    <Loader2 className="w-8 h-8 animate-spin text-emerald-600 dark:text-emerald-400" />
+    <p className="text-sm font-medium text-slate-500 dark:text-slate-400">Carregando RMS-Nutri...</p>
   </div>
 )
 
@@ -63,67 +64,69 @@ const RootRedirect: React.FC = () => {
 export function App() {
   return (
     <BrowserRouter>
-      <AuthProvider>
-        <Routes>
-          <Route path="/" element={<RootRedirect />} />
-          <Route
-            path="/login"
-            element={
-              <PublicRoute>
-                <LoginPage />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/cadastro"
-            element={
-              <PublicRoute>
-                <RegisterPage />
-              </PublicRoute>
-            }
-          />
-          <Route
-            path="/dashboard"
-            element={
-              <ProtectedRoute>
-                <DashboardPage />
-              </ProtectedRoute>
-            }
-          />
-          {/* Rotas de Pacientes (Prompt 4) */}
-          <Route
-            path="/pacientes"
-            element={
-              <ProtectedRoute>
-                <ErrorBoundary fallbackTitle="Erro ao carregar lista de pacientes">
-                  <PacientesListPage />
-                </ErrorBoundary>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/pacientes/novo"
-            element={
-              <ProtectedRoute>
-                <ErrorBoundary fallbackTitle="Erro ao carregar cadastro de paciente">
-                  <PacienteCreatePage />
-                </ErrorBoundary>
-              </ProtectedRoute>
-            }
-          />
-          <Route
-            path="/pacientes/:id"
-            element={
-              <ProtectedRoute>
-                <ErrorBoundary fallbackTitle="Erro ao carregar dados do paciente">
-                  <PacienteDetailPage />
-                </ErrorBoundary>
-              </ProtectedRoute>
-            }
-          />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      </AuthProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Routes>
+            <Route path="/" element={<RootRedirect />} />
+            <Route
+              path="/login"
+              element={
+                <PublicRoute>
+                  <LoginPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/cadastro"
+              element={
+                <PublicRoute>
+                  <RegisterPage />
+                </PublicRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <DashboardPage />
+                </ProtectedRoute>
+              }
+            />
+            {/* Rotas de Pacientes (Prompt 4) */}
+            <Route
+              path="/pacientes"
+              element={
+                <ProtectedRoute>
+                  <ErrorBoundary fallbackTitle="Erro ao carregar lista de pacientes">
+                    <PacientesListPage />
+                  </ErrorBoundary>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/pacientes/novo"
+              element={
+                <ProtectedRoute>
+                  <ErrorBoundary fallbackTitle="Erro ao carregar cadastro de paciente">
+                    <PacienteCreatePage />
+                  </ErrorBoundary>
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/pacientes/:id"
+              element={
+                <ProtectedRoute>
+                  <ErrorBoundary fallbackTitle="Erro ao carregar dados do paciente">
+                    <PacienteDetailPage />
+                  </ErrorBoundary>
+                </ProtectedRoute>
+              }
+            />
+            <Route path="*" element={<Navigate to="/" replace />} />
+          </Routes>
+        </AuthProvider>
+      </ThemeProvider>
     </BrowserRouter>
   )
 }

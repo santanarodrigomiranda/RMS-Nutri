@@ -6,6 +6,7 @@ import { Logo } from '../components/auth/Logo'
 import { Input } from '../components/ui/Input'
 import { Button } from '../components/ui/Button'
 import { Card } from '../components/ui/Card'
+import { ThemeToggle } from '../components/ui/ThemeToggle'
 
 export const RegisterPage: React.FC = () => {
   const navigate = useNavigate()
@@ -74,25 +75,30 @@ export const RegisterPage: React.FC = () => {
   const passwordsMatch = password.length > 0 && password === confirmPassword
 
   return (
-    <div className="min-h-screen w-full flex flex-col justify-center items-center p-4 sm:p-6 bg-gradient-to-b from-emerald-50/50 via-slate-50 to-emerald-50/30">
+    <div className="relative min-h-screen w-full flex flex-col justify-center items-center p-4 sm:p-6 bg-gradient-to-b from-emerald-50/50 via-slate-50 to-emerald-50/30 dark:from-slate-950 dark:via-slate-900 dark:to-emerald-950/20 transition-colors">
+      {/* Theme Toggle Top Right */}
+      <div className="absolute top-4 right-4 sm:top-6 sm:right-6">
+        <ThemeToggle />
+      </div>
+
       <div className="w-full max-w-md">
         {/* Brand Header */}
         <div className="flex flex-col items-center mb-8">
           <Logo size="lg" className="mb-3" />
-          <h1 className="text-xl sm:text-2xl font-bold text-slate-800 tracking-tight text-center">
+          <h1 className="text-xl sm:text-2xl font-bold text-slate-800 dark:text-slate-100 tracking-tight text-center">
             Crie sua conta profissional
           </h1>
-          <p className="text-sm text-slate-500 text-center mt-1">
+          <p className="text-sm text-slate-500 dark:text-slate-400 text-center mt-1">
             Cadastre-se para gerenciar seus atendimentos com excelência
           </p>
         </div>
 
         {/* Register Card */}
-        <Card className="p-6 sm:p-8 border-slate-200/90 shadow-xl shadow-emerald-950/5 bg-white/95 backdrop-blur-xs">
+        <Card className="p-6 sm:p-8 border-slate-200/90 dark:border-slate-800 shadow-xl shadow-emerald-950/5 dark:shadow-none bg-white/95 dark:bg-slate-900/95 backdrop-blur-xs">
           {error && (
             <div
               role="alert"
-              className="mb-6 p-4 rounded-xl bg-red-50 border border-red-200/80 text-red-700 text-sm flex items-start gap-3 animate-in fade-in duration-200"
+              className="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-950/50 border border-red-200/80 dark:border-red-900/60 text-red-700 dark:text-red-300 text-sm flex items-start gap-3 animate-in fade-in duration-200"
             >
               <AlertCircle className="w-5 h-5 shrink-0 text-red-500 mt-0.5" />
               <div className="leading-snug">{error}</div>
@@ -150,12 +156,12 @@ export const RegisterPage: React.FC = () => {
               <div className="mt-2 flex items-center gap-2 text-xs">
                 <span
                   className={`inline-flex items-center gap-1 font-medium transition-colors ${
-                    isPasswordMinLength ? 'text-emerald-600' : 'text-slate-400'
+                    isPasswordMinLength ? 'text-emerald-600 dark:text-emerald-400' : 'text-slate-400 dark:text-slate-500'
                   }`}
                 >
                   <CheckCircle2
                     className={`w-3.5 h-3.5 ${
-                      isPasswordMinLength ? 'text-emerald-500' : 'text-slate-300'
+                      isPasswordMinLength ? 'text-emerald-500 dark:text-emerald-400' : 'text-slate-300 dark:text-slate-600'
                     }`}
                   />
                   Mínimo de 9 caracteres
@@ -183,7 +189,7 @@ export const RegisterPage: React.FC = () => {
                 <div className="mt-2 flex items-center gap-2 text-xs">
                   <span
                     className={`inline-flex items-center gap-1 font-medium transition-colors ${
-                      passwordsMatch ? 'text-emerald-600' : 'text-red-500'
+                      passwordsMatch ? 'text-emerald-600 dark:text-emerald-400' : 'text-red-500 dark:text-red-400'
                     }`}
                   >
                     <CheckCircle2
@@ -210,12 +216,12 @@ export const RegisterPage: React.FC = () => {
           </form>
 
           {/* Footer separator & switch to login */}
-          <div className="mt-8 pt-6 border-t border-slate-100 text-center">
-            <p className="text-sm text-slate-600">
+          <div className="mt-8 pt-6 border-t border-slate-100 dark:border-slate-800 text-center">
+            <p className="text-sm text-slate-600 dark:text-slate-400">
               Já tem conta?{' '}
               <Link
                 to="/login"
-                className="font-semibold text-emerald-600 hover:text-emerald-700 hover:underline transition-colors ml-1"
+                className="font-semibold text-emerald-600 dark:text-emerald-400 hover:text-emerald-700 dark:hover:text-emerald-300 hover:underline transition-colors ml-1"
               >
                 Faça login
               </Link>
@@ -224,7 +230,7 @@ export const RegisterPage: React.FC = () => {
         </Card>
 
         {/* Security Info */}
-        <div className="mt-8 text-center text-xs text-slate-400">
+        <div className="mt-8 text-center text-xs text-slate-400 dark:text-slate-500">
           Ao se cadastrar, seus dados clínicos permanecem isolados e protegidos por criptografia.
         </div>
       </div>

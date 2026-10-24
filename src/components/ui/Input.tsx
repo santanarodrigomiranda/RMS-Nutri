@@ -1,5 +1,6 @@
 import React, { forwardRef, useState } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
+import { cn } from '../../utils/cn'
 
 export interface InputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -34,7 +35,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         {label && (
           <label
             htmlFor={inputId}
-            className="block text-sm font-semibold text-slate-700 tracking-tight"
+            className="block text-sm font-semibold text-slate-700 dark:text-slate-200 tracking-tight"
           >
             {label}
           </label>
@@ -42,7 +43,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
 
         <div className="relative rounded-xl">
           {leftIcon && (
-            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+            <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
               {leftIcon}
             </div>
           )}
@@ -51,15 +52,15 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             ref={ref}
             id={inputId}
             type={actualType}
-            className={`w-full rounded-xl border bg-white px-3.5 py-2.5 text-sm text-slate-900 placeholder:text-slate-400 transition-all duration-200 outline-none
-              ${leftIcon ? 'pl-10' : ''}
-              ${isPassword ? 'pr-11' : ''}
-              ${
-                error
-                  ? 'border-red-300 focus:border-red-500 focus:ring-3 focus:ring-red-100'
-                  : 'border-slate-200 hover:border-slate-300 focus:border-emerald-500 focus:ring-3 focus:ring-emerald-500/10'
-              }
-              ${className}`}
+            className={cn(
+              'w-full rounded-xl border bg-white dark:bg-slate-900/90 px-3.5 py-2.5 text-sm text-slate-900 dark:text-slate-100 placeholder:text-slate-400 dark:placeholder:text-slate-500 transition-all duration-200 outline-none',
+              leftIcon && 'pl-10',
+              isPassword && 'pr-11',
+              error
+                ? 'border-red-300 dark:border-red-800 focus:border-red-500 focus:ring-3 focus:ring-red-100 dark:focus:ring-red-950/40'
+                : 'border-slate-200 dark:border-slate-700 hover:border-slate-300 dark:hover:border-slate-600 focus:border-emerald-500 focus:ring-3 focus:ring-emerald-500/10 dark:focus:ring-emerald-500/20',
+              className
+            )}
             {...props}
           />
 
@@ -67,7 +68,7 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
             <button
               type="button"
               onClick={() => setShowPassword(!showPassword)}
-              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 focus:outline-none transition-colors"
+              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 focus:outline-none transition-colors cursor-pointer"
               tabIndex={-1}
               aria-label={showPassword ? 'Ocultar senha' : 'Ver senha'}
             >
@@ -81,13 +82,13 @@ export const Input = forwardRef<HTMLInputElement, InputProps>(
         </div>
 
         {error && (
-          <p className="text-xs text-red-600 font-medium flex items-center gap-1 animate-in fade-in duration-150">
+          <p className="text-xs text-red-600 dark:text-red-400 font-medium flex items-center gap-1 animate-in fade-in duration-150">
             {error}
           </p>
         )}
 
         {!error && helperText && (
-          <p className="text-xs text-slate-500">{helperText}</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400">{helperText}</p>
         )}
       </div>
     )

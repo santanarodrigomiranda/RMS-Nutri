@@ -34,7 +34,7 @@ export const Logo: React.FC<LogoProps> = ({
     <div className={`flex items-center gap-3 select-none ${className}`}>
       {/* Brand Icon Badge */}
       <div
-        className={`${iconSizes[size]} bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 ring-4 ring-emerald-50`}
+        className={`${iconSizes[size]} bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-white shadow-md shadow-emerald-500/20 ring-4 ring-emerald-50 dark:ring-emerald-950/60`}
       >
         <Leaf className={`${iconDim[size]} stroke-[2.2]`} />
       </div>
@@ -42,14 +42,14 @@ export const Logo: React.FC<LogoProps> = ({
       <div className="flex flex-col text-left">
         <div className="flex items-center gap-1.5 leading-none">
           <span
-            className={`${textSizes[size]} font-extrabold tracking-tight text-slate-900`}
+            className={`${textSizes[size]} font-extrabold tracking-tight text-slate-900 dark:text-slate-100`}
           >
-            RMS<span className="text-emerald-600 font-black">-Nutri</span>
+            RMS<span className="text-emerald-600 dark:text-emerald-400 font-black">-Nutri</span>
           </span>
           <span className="inline-block w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
         </div>
         {showSubtitle && (
-          <span className="text-[11px] font-medium tracking-wide uppercase text-emerald-700/80 mt-1">
+          <span className="text-[11px] font-medium tracking-wide uppercase text-emerald-700/80 dark:text-emerald-400/90 mt-1">
             Gestão Nutricional
           </span>
         )}

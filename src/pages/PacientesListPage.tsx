@@ -55,11 +55,11 @@ export const PacientesListPage: React.FC = () => {
         {/* Cabeçalho da Seção */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight flex items-center gap-2.5">
-              <Users className="w-7 h-7 text-emerald-600" />
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-slate-100 tracking-tight flex items-center gap-2.5">
+              <Users className="w-7 h-7 text-emerald-600 dark:text-emerald-400" />
               Pacientes
             </h1>
-            <p className="text-sm text-slate-500 mt-1">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1">
               Gerencie seus pacientes cadastrados, histórico clínico e planos alimentares.
             </p>
           </div>
@@ -75,20 +75,21 @@ export const PacientesListPage: React.FC = () => {
         </div>
 
         {/* Barra de Pesquisa */}
-        <Card className="p-3 sm:p-4 border-slate-200">
+        <Card className="p-3 sm:p-4">
           <div className="relative w-full">
-            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 pointer-events-none" />
+            <Search className="w-4 h-4 absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 dark:text-slate-500 pointer-events-none" />
             <input
               type="text"
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
               placeholder="Buscar paciente por nome completo..."
-              className="w-full pl-10 pr-4 py-2 text-sm bg-slate-50 hover:bg-white focus:bg-white border border-slate-200 focus:border-emerald-500 rounded-xl outline-none transition-all placeholder:text-slate-400 focus:ring-3 focus:ring-emerald-500/10"
+              className="w-full pl-10 pr-20 py-2.5 text-sm bg-slate-50 dark:bg-slate-800/80 hover:bg-white dark:hover:bg-slate-800 focus:bg-white dark:focus:bg-slate-800 border border-slate-200 dark:border-slate-700 focus:border-emerald-500 dark:focus:border-emerald-500 rounded-xl outline-none transition-all placeholder:text-slate-400 dark:placeholder:text-slate-500 text-slate-900 dark:text-slate-100 focus:ring-3 focus:ring-emerald-500/10"
             />
             {searchTerm && (
               <button
+                type="button"
                 onClick={() => setSearchTerm('')}
-                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 bg-slate-200/60 hover:bg-slate-200 px-2 py-0.5 rounded-md"
+                className="absolute right-3 top-1/2 -translate-y-1/2 text-xs text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 bg-slate-200/60 dark:bg-slate-700 hover:bg-slate-200 px-2 py-1 rounded-md cursor-pointer transition-colors"
               >
                 Limpar
               </button>
@@ -98,7 +99,7 @@ export const PacientesListPage: React.FC = () => {
 
         {/* Mensagem de Erro */}
         {errorMessage && (
-          <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-700 text-sm flex items-center gap-3">
+          <div className="p-4 rounded-xl bg-red-50 dark:bg-red-950/40 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 text-sm flex items-center gap-3">
             <AlertCircle className="w-5 h-5 shrink-0 text-red-500" />
             <span className="flex-1">{errorMessage}</span>
             <Button variant="outline" size="sm" onClick={fetchPacientes} className="text-xs">
@@ -109,20 +110,20 @@ export const PacientesListPage: React.FC = () => {
 
         {/* Estado de Carregamento */}
         {isLoading ? (
-          <div className="py-20 flex flex-col items-center justify-center text-slate-400 gap-3">
+          <div className="py-20 flex flex-col items-center justify-center text-slate-400 dark:text-slate-500 gap-3">
             <div className="w-8 h-8 rounded-full border-2 border-emerald-600 border-t-transparent animate-spin" />
             <p className="text-sm font-medium">Buscando pacientes no Neon...</p>
           </div>
         ) : pacientes.length === 0 ? (
           /* Estado Vazio: Nenhum paciente cadastrado ainda */
-          <Card className="p-12 text-center border-dashed border-2 border-slate-300 bg-white/60">
-            <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mx-auto mb-4">
+          <Card className="p-10 sm:p-14 text-center border-dashed border-2 border-slate-300 dark:border-slate-700 bg-white/60 dark:bg-slate-900/40">
+            <div className="w-16 h-16 rounded-2xl bg-emerald-50 dark:bg-emerald-950/60 text-emerald-600 dark:text-emerald-400 flex items-center justify-center mx-auto mb-4">
               <Users className="w-8 h-8 stroke-[1.8]" />
             </div>
-            <h3 className="text-lg font-bold text-slate-800">
+            <h3 className="text-lg font-bold text-slate-800 dark:text-slate-100">
               Nenhum paciente cadastrado ainda
             </h3>
-            <p className="text-sm text-slate-500 mt-1.5 max-w-sm mx-auto">
+            <p className="text-sm text-slate-500 dark:text-slate-400 mt-1.5 max-w-sm mx-auto">
               Comece agora registrando os dados do seu primeiro paciente para acompanhar consultas e planos alimentares.
             </p>
             <div className="mt-6">
@@ -137,12 +138,12 @@ export const PacientesListPage: React.FC = () => {
           </Card>
         ) : filteredPacientes.length === 0 ? (
           /* Nenhum resultado para a busca */
-          <Card className="p-12 text-center border-slate-200">
-            <Search className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-            <p className="text-base font-semibold text-slate-700">
+          <Card className="p-12 text-center">
+            <Search className="w-8 h-8 text-slate-400 dark:text-slate-500 mx-auto mb-2" />
+            <p className="text-base font-semibold text-slate-700 dark:text-slate-200">
               Nenhum paciente encontrado para "{searchTerm}"
             </p>
-            <p className="text-xs text-slate-500 mt-1">
+            <p className="text-xs text-slate-500 dark:text-slate-400 mt-1">
               Verifique a digitação ou limpe a busca para ver todos os pacientes.
             </p>
             <Button
@@ -155,10 +156,9 @@ export const PacientesListPage: React.FC = () => {
             </Button>
           </Card>
         ) : (
-          /* Lista de Pacientes */
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+          /* Lista de Pacientes em Grid Responsivo */
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredPacientes.map((paciente) => {
-              // Objetivos formatados
               const objetivosList = [
                 ...(paciente.objetivos || []),
                 paciente.objetivo_texto,
@@ -172,41 +172,40 @@ export const PacientesListPage: React.FC = () => {
                   to={`/pacientes/${paciente.id}`}
                   className="group block focus:outline-none"
                 >
-                  <Card className="p-5 h-full flex flex-col justify-between border-slate-200/90 hover:border-emerald-500/50 hover:shadow-md transition-all group-hover:-translate-y-0.5">
+                  <Card className="p-5 h-full flex flex-col justify-between hover:border-emerald-500/50 hover:shadow-md transition-all group-hover:-translate-y-0.5">
                     <div className="space-y-3">
                       {/* Topo do Card com Nome e Avatar */}
                       <div className="flex items-start justify-between gap-3">
                         <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-xl bg-emerald-100 text-emerald-700 font-bold flex items-center justify-center shrink-0 text-sm group-hover:bg-emerald-600 group-hover:text-white transition-colors">
+                          <div className="w-10 h-10 rounded-xl bg-emerald-100 dark:bg-emerald-950 text-emerald-700 dark:text-emerald-300 font-bold flex items-center justify-center shrink-0 text-sm group-hover:bg-emerald-600 group-hover:text-white transition-colors">
                             {paciente.nome.charAt(0).toUpperCase()}
                           </div>
-                          <div>
-                            <h3 className="font-bold text-slate-900 group-hover:text-emerald-700 transition-colors line-clamp-1">
+                          <div className="min-w-0">
+                            <h3 className="font-bold text-slate-900 dark:text-slate-100 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 transition-colors line-clamp-1">
                               {paciente.nome}
                             </h3>
-                            <span className="text-xs text-slate-400">
+                            <span className="text-xs text-slate-400 dark:text-slate-500 truncate block">
                               {paciente.whatsapp || paciente.email || 'Sem contato'}
                             </span>
                           </div>
                         </div>
-                        <ArrowRight className="w-4 h-4 text-slate-300 group-hover:text-emerald-600 group-hover:translate-x-1 transition-all shrink-0 mt-1" />
+                        <ArrowRight className="w-4 h-4 text-slate-300 dark:text-slate-600 group-hover:text-emerald-600 dark:group-hover:text-emerald-400 group-hover:translate-x-1 transition-all shrink-0 mt-1" />
                       </div>
 
-                      {/* Informações: Objetivo */}
-                      <div className="pt-2 border-t border-slate-100 space-y-2">
-                        <div className="flex items-center gap-2 text-xs text-slate-600">
-                          <Target className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
-                          <span className="font-semibold text-slate-700">Objetivo:</span>
-                          <span className="truncate text-slate-600" title={objetivoExibicao}>
+                      {/* Informações: Objetivo & Consulta */}
+                      <div className="pt-2 border-t border-slate-100 dark:border-slate-800 space-y-2">
+                        <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
+                          <Target className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400 shrink-0" />
+                          <span className="font-semibold text-slate-700 dark:text-slate-200">Objetivo:</span>
+                          <span className="truncate text-slate-600 dark:text-slate-400" title={objetivoExibicao}>
                             {objetivoExibicao}
                           </span>
                         </div>
 
-                        {/* Data da Última Consulta */}
-                        <div className="flex items-center gap-2 text-xs text-slate-600">
-                          <Calendar className="w-3.5 h-3.5 text-teal-600 shrink-0" />
-                          <span className="font-semibold text-slate-700">Última consulta:</span>
-                          <span className="text-slate-600">
+                        <div className="flex items-center gap-2 text-xs text-slate-600 dark:text-slate-300">
+                          <Calendar className="w-3.5 h-3.5 text-teal-600 dark:text-teal-400 shrink-0" />
+                          <span className="font-semibold text-slate-700 dark:text-slate-200">Última consulta:</span>
+                          <span className="text-slate-600 dark:text-slate-400">
                             {paciente.ultima_consulta
                               ? formatDateBR(paciente.ultima_consulta)
                               : 'Nenhuma consulta ainda'}
@@ -216,9 +215,9 @@ export const PacientesListPage: React.FC = () => {
                     </div>
 
                     {/* Rodapé do Card */}
-                    <div className="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-[11px] text-slate-400">
+                    <div className="mt-4 pt-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between text-[11px] text-slate-400 dark:text-slate-500">
                       <span>Ver perfil completo</span>
-                      <span className="text-emerald-600 font-medium group-hover:underline">
+                      <span className="text-emerald-600 dark:text-emerald-400 font-medium group-hover:underline">
                         Acessar →
                       </span>
                     </div>
